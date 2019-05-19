@@ -2,6 +2,11 @@ package examples;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+//import java.io.File;
+//import java.io.IOException;
+import java.util.Arrays;
+
+//import javax.imageio.ImageIO;
 
 public class ImageArray {
 
@@ -13,12 +18,44 @@ public class ImageArray {
 		
 		// 1. Print the RGB value for each pixel in the image.
 		
+		for(int[][] pixel : imageAsArray) {
+			for(int[] color : pixel) 
+				System.out.println(Arrays.toString(color));
+		}
+		
 		// 2. Remove all the blue and green from the image.
 		
+		for(int[][] pixel : imageAsArray) {
+			for(int[] color : pixel) {
+				color[1] = 0;
+				color[2] = 0;
+			}
+		}		
+		
 		// 3. Convert to black & white.
+
+		for(int[][] pixel : imageAsArray) {
+			for(int[] color : pixel) 
+		        	color[2] = color[1] = color[0];
+		}
 		
 		// [optional] Post a manipulated photo of yourself to Slack.
 		
+//		ImageViewer imageViewer2 = new ImageViewer("myPhoto.jpg");
+//		int[][][] imageAsArray2 = convertToArray(imageViewer2.getImage());
+//		for(int[][] pixel : imageAsArray2) {
+//			for(int[] color : pixel) 
+//		        	color[2] = color[1] = color[0];
+//		}
+//		imageViewer2.setImage(convertToImage(imageAsArray2));
+//		imageViewer2.show();
+//		BufferedImage gray = convertToImage(imageAsArray2);
+//		File outputfile = new File("image.jpg");
+//		try {
+//			ImageIO.write(gray, "jpg", outputfile);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		
 		imageViewer.setImage(convertToImage(imageAsArray));
 		
@@ -33,8 +70,8 @@ public class ImageArray {
 			for (int j = 0; j < image.getHeight(); j++) {
 				Color pixelColor = new Color(image.getRGB(i, j));
 				imageAsArray[i][j][0] = pixelColor.getRed();
-				imageAsArray[i][j][1] = 0;
-				imageAsArray[i][j][2] = 0;
+				imageAsArray[i][j][1] = pixelColor.getGreen();
+				imageAsArray[i][j][2] = pixelColor.getBlue();
 			}
 		}
 		return imageAsArray;
